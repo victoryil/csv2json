@@ -1,48 +1,30 @@
 import { Parser } from "./csv-parser.js";
-
+import { Reader } from "./read-file.js";
+import { dropzoneFile, pd } from "./utils.js";
+import { fileDownloader } from "./download-file.js";
 
 
 document.addEventListener('drop', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    for (const f of event.dataTransfer.files) {
-        readSingleFile(f)
-    }
+    pd.preventDefault(event);
+    resolveFiles(event.dataTransfer.files)
 
 });
 
-document.getElementById('dropzone-file').addEventListener('change', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+document.addEventListener('dragover', (event) => {
+    pd.preventDefault(event);
 
-    for (const f of event.target.files) {
-        readSingleFile(f)
-    }
 });
 
-function readSingleFile(f) {
-    console.log(f)
-    let resultado
-    if (f) {
-        var r = new FileReader();
-        r.readAsText(f);
-        r.onload = function () {
-            resultado = r.result
-            const data = Parser.csv2json(resultado)
-            let filename = f.name
-            filename = filename.replace(".csv", ".json")
+dropzoneFile.addEventListener('change', (event) => {
+    pd.preventDefault(event);
+    resolveFiles(event.dataTransfer.files)
+    
+});
 
-            var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(data);
-            var dlAnchorElem = document.getElementById('downloadAnchorElem');
-        
-            dlAnchorElem.setAttribute("href", dataStr);
-            dlAnchorElem.setAttribute("download", filename);
-            dlAnchorElem.click();
-        }
-
-    } else {
-        alert("Failed to load file");
+function resolveFiles(files) {
+    for (const file of files) {
+        Reader.readFile(file).then(text => {
+            fileDownloader.download(Parser.csv2json(text), file.name.replace(".csv",".json"), "text/plain")
+        })
     }
-    return resultado
 }

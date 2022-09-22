@@ -1,7 +1,5 @@
 class CsvParser {
-    constructor(){
-
-    }
+    constructor(){}
     csv2json(csv) {
         const array = csv.toString().split("\n");
         const csvToJsonResult = [];
