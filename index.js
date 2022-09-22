@@ -35,16 +35,16 @@ document.getElementById('dropzone-file').addEventListener('change', (event) => {
 function csv2json(csv, f) {
     const array = csv.toString().split("\n");
 
-    
+
     const csvToJsonResult = [];
 
-    
+
     const headers = array[0].split(",")
-    
+
     for (let i = 1; i < array.length - 1; i++) {
-        
+
         const jsonObject = {}
-        
+
         const currentArrayString = array[i]
         let string = ''
 
@@ -67,55 +67,57 @@ function csv2json(csv, f) {
             }
             else jsonObject[headers[j]] = jsonProperties[j]
         }
-        
+
         csvToJsonResult.push(jsonObject)
     }
+    let result = csvToJsonResult
 
-    let result = csvToJsonResult.map((item) => {
-        console.log(item)
-        let nJson = {}
+    if (document.getElementById('skMirroning').checked) {
+        result = csvToJsonResult.map((item) => {
+            console.log(item)
+            let nJson = {}
 
-        nJson['sourceId'] = item.iDB + "." + item.iTB;
+            nJson['sourceId'] = item.iDB + "." + item.iTB;
 
-        if (!item.oDB) {
-            nJson['destinationId'] = item.iDB + "." + item.iTB;
-        } else {
-            nJson['destinationId'] = item.oDB + "." + item.oTB;
-        }
+            if (!item.oDB) {
+                nJson['destinationId'] = item.iDB + "." + item.iTB;
+            } else {
+                nJson['destinationId'] = item.oDB + "." + item.oTB;
+            }
 
-        if (item.partitionsReplication) {
-            nJson['partitionsReplication'] = item.partitionsReplication;
-        }
+            if (item.partitionsReplication) {
+                nJson['partitionsReplication'] = item.partitionsReplication;
+            }
 
-        if (item.structureReplication) {
-            nJson['structureReplication'] = item.structureReplication;
-        } else {
-            nJson['structureReplication'] = false;
-        }
+            if (item.structureReplication) {
+                nJson['structureReplication'] = item.structureReplication;
+            } else {
+                nJson['structureReplication'] = false;
+            }
 
-        if (item.isView) {
-            nJson['isView'] = item.isView;
-        }
+            if (item.isView) {
+                nJson['isView'] = item.isView;
+            }
 
-        console.log(nJson);
-        return nJson;
-    })
+            console.log(nJson);
+            return nJson;
+        })
+        result = {
+            "configInfo": {
+                "tables": [
+                    result
+                ]
+            }
+        };
+    }
 
-    let finalObj = {
-        "configInfo": {
-            "tables": [
-                result
-            ]
-        }
-    };
+    console.log(result);
 
-    console.log(finalObj);
-
-    let data = JSON.stringify(finalObj);
+    let data = JSON.stringify(result);
     let filename = f.name
 
     filename = filename.replace(".csv", ".json")
-    
+
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(data);
     var dlAnchorElem = document.getElementById('downloadAnchorElem');
 
