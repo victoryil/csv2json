@@ -20,11 +20,18 @@ dropzoneFile.addEventListener('change', (event) => {
     resolveFiles(event.dataTransfer.files)
     
 });
-
 function resolveFiles(files) {
     for (const file of files) {
         Reader.readFile(file).then(text => {
-            fileDownloader.download(Parser.csv2json(text), file.name.replace(".csv",".json"), "text/plain")
+            let filename ="";
+            let filen = file.name.split('.');
+            filen.forEach((item, index) => {
+                if(index === filen.length - 1) return;
+                filename += item;
+            }
+            );
+            filename = filename += ".json"
+            fileDownloader.download(Parser.csv2json(text), filename, "text/plain")
         })
     }
 }
