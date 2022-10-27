@@ -1,6 +1,5 @@
 class ReaderFile {
-    constructor() {
-    }
+    constructor() {}
     
     readFileWaiter(file) {
         return new Promise((resolve, reject) => {

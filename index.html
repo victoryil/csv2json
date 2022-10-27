@@ -1,16 +1,18 @@
+
 <!DOCTYPE html>
 <html class="dark">
 
 <head>
     <meta charset="UTF-8">
     <title>File Parser</title>
-    <!-- https://electronjs.org/docs/tutorial
-						/security#csp-meta-tag -->
+    
     <link rel="stylesheet" href="build.css">
-</head>
 
+</head>
 <body>
+
     <div class="h-screen w-screen flex flex-row bg-honda bg-cover">
+
         <a id="downloadAnchorElem" style="display:none"></a>
         <div class="h-screen w-screen  flex justify-center items-center basis-1/4">
             <div
@@ -31,7 +33,34 @@
                         <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">San.K.Mirroning</span>
                     </label>
                 </a>
-                <div id="meta-selector" class="invisible">
+
+                <div hidden id="headerCheckContainer">
+                    <h3 class="mb-5 text-lg font-medium text-gray-900 dark:text-white">Extra options</h3>
+                    <ul class="grid gap-6 w-full md:grid-cols-2">
+                        <li>
+                            <input type="checkbox" id="header-option" value="" class="hidden peer" required="">
+                            <label for="header-option"
+                                class="inline-flex justify-between items-center p-5 w-full h-40 text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <div class="block">
+                                    <div class="w-full text-lg font-semibold">Header</div>
+                                    <div class="w-full text-sm">If your csv havent header, click this</div>
+                                </div>
+                            </label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="flowbite-option" value="" class="hidden peer">
+                            <label for="flowbite-option"
+                                class="inline-flex justify-between items-center p-5 w-full h-40 text-gray-500 bg-white rounded-lg border-2 border-gray-200 cursor-pointer dark:hover:text-gray-300 dark:border-gray-700 peer-checked:border-blue-600 hover:text-gray-600 dark:peer-checked:text-gray-300 peer-checked:text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:bg-gray-800 dark:hover:bg-gray-700">
+                                <div class="block">
+                                    <div class="w-full text-lg font-semibold">Replace Header</div>
+                                    <div class="w-full text-sm">If need replace header, click this
+                                    </div>
+                                </div>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div id="meta-selector" hidden class="mt-2">
                     <label for="meta-type"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Select an option</label>
                     <select id="meta-type"
@@ -39,11 +68,11 @@
                         <option selected value="0">database,table</option>
                         <option value="1">database</option>
                         <option value="2">database.table</option>
+                        <option value="3">database.table 1b1</option>
                     </select>
                 </div>
+
             </div>
-
-
         </div>
         <div class="flex h-screen justify-center items-center basis-3/4">
             <label for="dropzone-file"
@@ -62,6 +91,9 @@
                 <input id="dropzone-file" type="file" class="hidden" />
             </label>
         </div>
+
+
+        <!--NOD-->
     </div>
 
     <!-- Adding Individual Renderer Process JS File -->

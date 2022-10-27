@@ -1,6 +1,6 @@
 import { Parser } from "./csv-parser.js";
 import { Reader } from "./read-file.js";
-import { dropzoneFile, pd } from "./utils.js";
+import { dropzoneFile, metaType, pd } from "./utils.js";
 import { fileDownloader } from "./download-file.js";
 
 
@@ -31,7 +31,11 @@ function resolveFiles(files) {
             }
             );
             filename = filename += ".json"
-            fileDownloader.download(Parser.csv2json(text), filename, "text/plain")
+            if(metaType.value === "3") {
+                Parser.csv2jsonDownload1By1(text);
+            } else {
+                fileDownloader.download(Parser.csv2json(text), filename, "text/plain")
+            }
         })
     }
 }

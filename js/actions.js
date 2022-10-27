@@ -1,4 +1,4 @@
-import { pd, metaSelector, skMirroningCheck } from "./utils.js";
+import { pd, metaSelector, skMirroningCheck, headerCheckContainer } from "./utils.js";
 
 skMirroningCheck.addEventListener('change', (event) => {
     pd.preventDefault(event);
@@ -7,5 +7,6 @@ skMirroningCheck.addEventListener('change', (event) => {
         console.log("metaSelector is null");
         return;
     } 
-    metaSelector.style.visibility = event.target.checked ? 'visible' : 'hidden';
+    metaSelector.style.display = event.target.checked ? 'block' : 'none';
+    headerCheckContainer.style.display = event.target.checked ? 'block' : 'none';
 });
